@@ -1,0 +1,67 @@
+<html>
+<head>
+  <link href="stylesheets/grid.css" media="screen" rel="stylesheet" type="text/css" />
+  <script src="js/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="container_12">
+  <div class="grid_3">
+    <h3>add</h3>
+    <input type="text" class="add" value="4"/>
+    <input type="text" class="add" value="4"/>
+    <input type="text" class="add" value="4"/>
+
+  </div>
+
+  <div class="grid_3">
+    <h3>subtract</h3>
+
+    <input type="text" class="subtract" value="2"/>
+    <input type="text" class="subtract" value="2"/>
+    <input type="text" class="subtract" value="2"/>
+  </div>
+  <div class="grid_3">
+    <h3>multiply</h3>
+    <input type="text" id="multiply"  value="2"/>
+  </div>
+  <div class="grid_3">
+    <h3>divisor</h3>
+    <input type="text" id="divisor"  value="0.5"/>
+  </div>
+  <div class="grid_12" style="border:black solid thin;padding:15px;margin-top:15px" id="total">total</div>
+</div>
+</body>
+<script type="text/javascript">
+  function calculate_total(params){
+    $("#total").html(" " + params["multiply"] + " " + params["divisor"]);
+  }
+  function run_update(){
+      var params = new Array();
+      params["multiply"] = $("#multiply").value;
+      params["divisor"] = $("#divisor").value;
+      calculate_total(params);
+
+  }
+  $(function(){
+    var singleItems = new Array();
+    singleItems[0] = "multiply";
+    singleItems[1] = "divisor";
+    
+    var onValuesChanged = function () {
+      var params = new Array();
+      for (var id in singleItems){
+        params[singleItems[id]] = $("#" + singleItems[id]).val();
+      }
+      calculate_total(params);
+    };
+
+    for (var id in singleItems){
+      $("#" + singleItems[id]).change(function(){
+        onValuesChanged();
+      });
+    }
+  });
+  
+</script>
+
+</html>
