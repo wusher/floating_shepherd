@@ -77,7 +77,6 @@
           collection[index] = parseFloat($(value).val());
         });
         params[multipleItems[klass]] = collection;
-
       }
       calculate_total(params);
     };
@@ -92,9 +91,12 @@
         onValuesChanged();
       });
     }
-
+    var pollForChanges = function () {
+      onValuesChanged();
+      setTimeout(pollForChanges, 4000);
+    };
     //at the end call the function
-    onValuesChanged();
+    pollForChanges();
   }
   
 </script>
