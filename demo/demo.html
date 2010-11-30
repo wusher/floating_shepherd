@@ -44,27 +44,13 @@
     }
     $("#total").html((total *  params["multiply"] ) / params["divisor"]);
   }
-  function run_update(){
-      var params = new Array();
-      params["multiply"] = $("#multiply").value;
-      params["divisor"] = $("#divisor").value;
-      calculate_total(params);
 
-  }
-
-  $(function(){
-    var singleItems = new Array();
-    singleItems[0] = "multiply";
-    singleItems[1] = "divisor";
-    
-    var multipleItems = new Array();
-    multipleItems[0] = "add";
-    multipleItems[1] = "subtract";
-
-
-    make_magic(["multiply", "divisor"], ["add","subtract"]);
-  });
-  function make_magic(singleItems, multipleItems) {
+ function make_magic(singleItems, multipleItems, pollTimeout) {
+    //set defaults 
+    if (pollTimeout === undefined){
+      pollTimeout = 3000;
+    }
+    //build functions 
     var onValuesChanged = function () {
       var params = new Array();
       for (var id in singleItems){
@@ -80,24 +66,23 @@
       }
       calculate_total(params);
     };
-
-    for (var id in singleItems){
-      $("#" + singleItems[id]).change(function(){
-        onValuesChanged();
-      });
-    }
-    for (var klas in multipleItems){
-      $("." + multipleItems[klas]).change(function(){
-        onValuesChanged();
-      });
-    }
     var pollForChanges = function () {
       onValuesChanged();
-      setTimeout(pollForChanges, 4000);
+      setTimeout(pollForChanges, pollTimeout);
     };
+    // set up on change events 
+    for (var id in singleItems){
+      $("#" + singleItems[id]).change(onValuesChanged());
+    }
+    for (var klas in multipleItems){
+      $("." + multipleItems[klas]).change(onValuesChanged());
+    }
     //at the end call the function
     pollForChanges();
   }
+  $(function(){
+    make_magic(["multiply", "divisor"], ["add","subtract"]);
+  });
   
 </script>
 
