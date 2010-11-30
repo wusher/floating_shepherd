@@ -33,7 +33,16 @@
 </body>
 <script type="text/javascript">
   function calculate_total(params){
-    $("#total").html(" " + params["multiply"] + " " + params["divisor"]);
+    var total = 0;
+    var items = params["add"];
+    for ( var i in items){
+      total += items[i];
+    }
+    items = params["subtract"];
+    for (var i in items){
+      total -= items[i];
+    }
+    $("#total").html((total *  params["multiply"] ) / params["divisor"]);
   }
   function run_update(){
       var params = new Array();
@@ -42,15 +51,33 @@
       calculate_total(params);
 
   }
+
   $(function(){
     var singleItems = new Array();
     singleItems[0] = "multiply";
     singleItems[1] = "divisor";
     
+    var multipleItems = new Array();
+    multipleItems[0] = "add";
+    multipleItems[1] = "subtract";
+
+
+    make_magic(["multiply", "divisor"], ["add","subtract"]);
+  });
+  function make_magic(singleItems, multipleItems) {
     var onValuesChanged = function () {
       var params = new Array();
       for (var id in singleItems){
-        params[singleItems[id]] = $("#" + singleItems[id]).val();
+        params[singleItems[id]] = parseFloat($("#" + singleItems[id]).val());
+      }
+      for (var klass in multipleItems){
+        var collection = new Array();
+        var items = $("." + multipleItems[klass]);
+        jQuery.each(items, function(index,value){
+          collection[index] = parseFloat($(value).val());
+        });
+        params[multipleItems[klass]] = collection;
+
       }
       calculate_total(params);
     };
@@ -60,7 +87,15 @@
         onValuesChanged();
       });
     }
-  });
+    for (var klas in multipleItems){
+      $("." + multipleItems[klas]).change(function(){
+        onValuesChanged();
+      });
+    }
+
+    //at the end call the function
+    onValuesChanged();
+  }
   
 </script>
 
