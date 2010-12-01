@@ -1,5 +1,5 @@
 (function($){
-  $.fn.make_magic = function(options){
+  $.fn.hyperionize = function(options){
     var defaults = { 
       singleItems : [],
       multipleItems : [],
@@ -32,13 +32,11 @@
       for (var id in options.singleItems){
         $("#" + options.singleItems[id]).change(onValuesChanged());
       }
-      for (var klas in options.multipleItems){
-        $("." + options.multipleItems[klas]).change(onValuesChanged());
+      for (var klass in options.multipleItems){
+        $("." + options.multipleItems[klass]).change(onValuesChanged());
       }
       //at the end call the function
       pollForChanges();
-         
-
     });
   };
 })(jQuery);
