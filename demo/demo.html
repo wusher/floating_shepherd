@@ -64,7 +64,7 @@
           for (var klass in options.multipleItems){
             var collection = new Array();
             var items = $("." + options.multipleItems[klass]);
-            jQuery.each(items, function(index,value){
+            $.each(items, function(index,value){
               collection[index] = parseFloat($(value).val());
             });
             params[options.multipleItems[klass]] = collection;
@@ -91,8 +91,7 @@
   })(jQuery);
 
   $(function(){
-    //$.make_magic(["multiply", "divisor"], ["add","subtract"]);
-    $.make_magic();
+    $(document).make_magic({singleItems:["multiply", "divisor"], multipleItems:["add","subtract"]});
   });
   
 </script>
