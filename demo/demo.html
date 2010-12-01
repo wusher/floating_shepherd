@@ -2,6 +2,7 @@
 <head>
   <link href="stylesheets/grid.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="../jquery.hyperion.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="container_12">
@@ -44,52 +45,6 @@
     }
     $("#total").html((total *  params["multiply"] ) / params["divisor"]);
   }
-
-  (function($){
-    $.fn.make_magic = function(options){
-      var defaults = { 
-        singleItems : [],
-        multipleItems : [],
-        pollTimeout : 3000
-      };
-      var options = $.extend(defaults,options);
-
-      return this.each(function () {
-        //build functions 
-        var onValuesChanged = function () {
-          var params = new Array();
-          for (var id in options.singleItems){
-            params[options.singleItems[id]] = parseFloat($("#" + options.singleItems[id]).val());
-          }
-          for (var klass in options.multipleItems){
-            var collection = new Array();
-            var items = $("." + options.multipleItems[klass]);
-            $.each(items, function(index,value){
-              collection[index] = parseFloat($(value).val());
-            });
-            params[options.multipleItems[klass]] = collection;
-          }
-          calculate_total(params);
-        };
-        var pollForChanges = function () {
-          onValuesChanged();
-          setTimeout(pollForChanges, options.pollTimeout);
-        };
-        // set up on change events 
-        for (var id in options.singleItems){
-          $("#" + options.singleItems[id]).change(onValuesChanged());
-        }
-        for (var klas in options.multipleItems){
-          $("." + options.multipleItems[klas]).change(onValuesChanged());
-        }
-        //at the end call the function
-        pollForChanges();
-           
-
-      });
-    };
-  })(jQuery);
-
   $(function(){
     $(document).make_magic({singleItems:["multiply", "divisor"], multipleItems:["add","subtract"]});
   });
