@@ -46,7 +46,7 @@
     $("#total").html((total *  params["multiply"] ) / params["divisor"]);
   }
   $(function(){
-    $(document).hyperionize({singleItems:["multiply", "divisor"], multipleItems:["add","subtract"]});
+    $(document).hyperionize({singleItems:["multiply", "divisor"], multipleItems:["add","subtract"], callback : calculate_total});
   });
   
 </script>
