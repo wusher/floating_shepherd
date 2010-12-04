@@ -32,18 +32,41 @@
         //get the value for each single item field
         for (var id in options.singleItems){
           var htmlId = options.singleItems[id]; 
-          params[htmlId] = convertValueToFloat($("#" + htmlId).val());
+          var item = $("input#" + htmlId);
+          if (item.length > 0 ){
+            params[htmlId] = convertValueToFloat(item.val());
+          } else  {
+            var divItem = $("div#" + htmlId);
+            if (divItem.length > 0 ){
+              params[htmlId] = convertValueToFloat(divItem.text());
+            }
+          }
         }
         //get the value for each multiple item 
         for (var klass in options.multipleItems){
           var htmlClass = options.multipleItems[klass];
           var collection = new Array();
-          var items = $("." + htmlClass);
+          var items = $("input." + htmlClass);
+          if (items.size() > 0) {
+            //store the value for each field found
+            $.each(items, function(index,value){
+              collection[index] = convertValueToFloat($(value).val());
+            });
+            params[htmlClass] = collection;
+          }
+        }
+        //get the value for each multiple item 
+        for (var klass in options.multipleItems){
+          var htmlClass = options.multipleItems[klass];
+          var collection = new Array();
+          var items = $("div." + htmlClass);
           //store the value for each field found
-          $.each(items, function(index,value){
-            collection[index] = convertValueToFloat($(value).val());
-          });
-          params[htmlClass] = collection;
+          if (items.size() > 0) {
+            $.each(items, function(index,value){
+              collection[index] = convertValueToFloat($(value).text());
+            });
+            params[htmlClass] = collection;
+          }
         }
         if (options.callback != null) {
           options.callback(params);
