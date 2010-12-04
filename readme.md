@@ -1,7 +1,7 @@
 jQuery floating shepherd 
 =
 
-<i>I am still new to javascript so my code is a little C# flavored and I welcome any feedback. </i> 
+<i>I am still new to javascript so my code is very C# flavored and I welcome any feedback. </i> 
 
 about
 --
@@ -33,9 +33,16 @@ parameters
 how to use
 --
 
+ 
+      $(function(){
+        $(document).observe_items({
+          singleItems:["multiply", "divisor"],
+          multipleItems:["add","subtract"], 
+          callback : calculate_total
+        });
+      });
 
-examples
---
+
 
 
 
