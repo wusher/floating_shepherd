@@ -1,7 +1,7 @@
 jQuery floating shepherd 
 =
 
-### I am still new to javascript so my code is a little C# flavored and I welcome any feedback.  
+<i>I am still new to javascript so my code is a little C# flavored and I welcome any feedback. </i> 
 
 about
 --
