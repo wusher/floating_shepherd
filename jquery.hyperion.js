@@ -1,6 +1,6 @@
 (function($){
 
-  $.fn.hyperionize = function(options){
+  $.fn.observe_items = function(options){
     var defaults = { 
       singleItems : [],
       multipleItems : [],
