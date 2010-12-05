@@ -25,6 +25,20 @@
         }
         return result; 
       };
+      var getSingleValue = function(id){
+        var item;
+        item = $("input#" + id);
+        if (item.length > 0) {
+          return convertValueToFloat(item.val());  
+        } else {
+          item = $("div#" + id);
+          return convertValueToFloat(item.text());
+        }
+      };
+
+      var getMultipleValues = function(klass){
+
+      };
 
       //build functions 
       var onValuesChanged = function () {
@@ -32,15 +46,7 @@
         //get the value for each single item field
         for (var id in options.singleItems){
           var htmlId = options.singleItems[id]; 
-          var item = $("input#" + htmlId);
-          if (item.length > 0 ){
-            params[htmlId] = convertValueToFloat(item.val());
-          } else  {
-            var divItem = $("div#" + htmlId);
-            if (divItem.length > 0 ){
-              params[htmlId] = convertValueToFloat(divItem.text());
-            }
-          }
+          params[htmlId] = getSingleValue(htmlId);
         }
         //get the value for each multiple item 
         for (var klass in options.multipleItems){
