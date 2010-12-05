@@ -80,10 +80,10 @@
       };
       // set up on change events 
       for (var id in options.singleItems){
-        $("#" + options.singleItems[id]).change(onValuesChanged());
+        $("#" + options.singleItems[id]).live('change',onValuesChanged);
       }
       for (var klass in options.multipleItems){
-        $("." + options.multipleItems[klass]).change(onValuesChanged());
+        $("." + options.multipleItems[klass]).live('change', onValuesChanged);
       }
       //at the end start the polling  
       pollForChanges();
