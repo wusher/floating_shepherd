@@ -17,14 +17,16 @@
       var convertValueToFloat = function(value){
         var result = parseFloat(value);
         if (isNaN(result)){
-          if (options.convertValueToFloat && (value || value.length <= 0)){
-            result = 0
+          doConvertEmptyToZero = options.convertValueToFloat && (value || value.length <= 0);
+          if (doConvertEmptyToZero){
+            result = 0;
           } else if (options.convertInvalidToZero) {
-            result = 0
+            result = 0;
           }
         }
         return result; 
       };
+      // returns the value in the field/div
       var getSingleValue = function(id){
         var item;
         item = $("input#" + id);
@@ -35,7 +37,7 @@
           return convertValueToFloat(item.text());
         }
       };
-
+      // returns a collection of the values of the arrays
       var getMultipleValues = function(klass){
         var collection = new Array();
         var items = $("input." + klass);
