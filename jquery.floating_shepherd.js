@@ -37,7 +37,21 @@
       };
 
       var getMultipleValues = function(klass){
-
+        var collection = new Array();
+        var items = $("input." + klass);
+        if (items.size() > 0) {
+          //store the value for each field found
+          $.each(items, function(index,value){
+            collection[index] = convertValueToFloat($(value).val());
+          });
+        } else {
+          items = $("div." + klass);
+          //store the value for each div found
+          $.each(items, function(index,value){
+            collection[index] = convertValueToFloat($(value).text());
+          });
+        }
+        return collection;
       };
 
       //build functions 
@@ -51,28 +65,7 @@
         //get the value for each multiple item 
         for (var klass in options.multipleItems){
           var htmlClass = options.multipleItems[klass];
-          var collection = new Array();
-          var items = $("input." + htmlClass);
-          if (items.size() > 0) {
-            //store the value for each field found
-            $.each(items, function(index,value){
-              collection[index] = convertValueToFloat($(value).val());
-            });
-            params[htmlClass] = collection;
-          }
-        }
-        //get the value for each multiple item 
-        for (var klass in options.multipleItems){
-          var htmlClass = options.multipleItems[klass];
-          var collection = new Array();
-          var items = $("div." + htmlClass);
-          //store the value for each field found
-          if (items.size() > 0) {
-            $.each(items, function(index,value){
-              collection[index] = convertValueToFloat($(value).text());
-            });
-            params[htmlClass] = collection;
-          }
+          params[htmlClass] = getMultipleValues(htmlClass);
         }
         if (options.callback != null) {
           options.callback(params);
@@ -83,7 +76,6 @@
         onValuesChanged();
         setTimeout(pollForChanges, options.pollTimeout);
       };
-
       // set up on change events 
       for (var id in options.singleItems){
         $("#" + options.singleItems[id]).change(onValuesChanged());
@@ -91,8 +83,7 @@
       for (var klass in options.multipleItems){
         $("." + options.multipleItems[klass]).change(onValuesChanged());
       }
-
-      //at the end call the function
+      //at the end start the polling  
       pollForChanges();
     });
   };
